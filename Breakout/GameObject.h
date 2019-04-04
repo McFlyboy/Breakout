@@ -1,5 +1,6 @@
 #ifndef GAME_OBJECT_H
 #define GAME_OBJECT_H
+#include "Vector2f.h"
 #include <SDL.h>
 
 namespace breakout
@@ -11,7 +12,7 @@ namespace breakout
 		bool IsSuccessfullyCreated() const;
 		SDL_Texture* GetTexture() const;
 		const SDL_Rect* GetCoords() const;
-		void Move(const float x, const float y);
+		void Move(const Vector2f movement);
 		~GameObject();
 	};
 }

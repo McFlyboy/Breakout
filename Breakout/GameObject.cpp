@@ -6,7 +6,7 @@ using namespace std;
 
 namespace breakout
 {
-	float xPos, yPos;
+	Vector2f position;
 	SDL_Texture* texture = nullptr;
 	SDL_Rect* coords = nullptr;
 
@@ -38,12 +38,11 @@ namespace breakout
 	{
 		return coords;
 	}
-	void GameObject::Move(const float x, const float y)
+	void GameObject::Move(const Vector2f movement)
 	{
-		xPos += x;
-		yPos += y;
-		coords->x = static_cast<int>(xPos);
-		coords->y = static_cast<int>(yPos);
+		position += movement;
+		coords->x = static_cast<int>(position.x);
+		coords->y = static_cast<int>(position.y);
 	}
 	GameObject::~GameObject()
 	{

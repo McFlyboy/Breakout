@@ -3,6 +3,7 @@
 #include "Window.h"
 #include "InputManager.h"
 #include "GameObject.h"
+#include "Vector2f.h"
 
 using namespace std;
 
@@ -58,24 +59,24 @@ namespace breakout
 			{
 				cout << "Down key pressed" << endl;
 			}
-			float moveX = 0.0f, moveY = 0.0f;
+			Vector2f movement;
 			if (left || input->KeyStillDown(SDL_SCANCODE_LEFT))
 			{
-				moveX -= 0.1f;
+				movement.x -= 0.1f;
 			}
 			if (left || input->KeyStillDown(SDL_SCANCODE_RIGHT))
 			{
-				moveX += 0.1f;
+				movement.x += 0.1f;
 			}
 			if (left || input->KeyStillDown(SDL_SCANCODE_UP))
 			{
-				moveY -= 0.1f;
+				movement.y -= 0.1f;
 			}
 			if (left || input->KeyStillDown(SDL_SCANCODE_DOWN))
 			{
-				moveY += 0.1f;
+				movement.y += 0.1f;
 			}
-			square->Move(moveX, moveY);
+			square->Move(movement);
 			return true;
 		}
 		void Render()
