@@ -26,7 +26,7 @@ namespace breakout
 			window->SetDrawColor(0, 0, 0);
 			window->Clear();
 			input = InputManager::GetInstance();
-			square = new GameObject("picture.bmp");
+			square = new GameObject(Vector2f(), "picture.bmp");
 			if (!square->IsSuccessfullyCreated())
 			{
 				return false;
@@ -70,11 +70,11 @@ namespace breakout
 			}
 			if (left || input->KeyStillDown(SDL_SCANCODE_UP))
 			{
-				movement.y -= 0.1f;
+				movement.y += 0.1f;
 			}
 			if (left || input->KeyStillDown(SDL_SCANCODE_DOWN))
 			{
-				movement.y += 0.1f;
+				movement.y -= 0.1f;
 			}
 			square->Move(movement);
 			return true;

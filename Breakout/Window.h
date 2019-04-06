@@ -9,6 +9,9 @@ namespace breakout
 	{
 	public:
 		static Window* GetInstance();
+
+		int GetWidth() const;
+		int GetHeight() const;
 		void SetDrawColor(Uint8 red, Uint8 green, Uint8 blue);
 		void Clear();
 		SDL_Texture* CreateTextureFromSurface(SDL_Surface* surface);
@@ -16,7 +19,6 @@ namespace breakout
 		void RenderUpdate();
 		~Window();
 	private:
-		static Window* instance;
 		Window();
 		bool IsSuccessfullyCreated() const;
 	};

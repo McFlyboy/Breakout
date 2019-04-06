@@ -5,10 +5,13 @@ using namespace std;
 
 namespace breakout
 {
-	Window* Window::instance = nullptr;
+	static Window* instance = nullptr;
+
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
 	bool successfullyCreated = false;
+	const int width = 1280;
+	const int height = 720;
 
 	Window::Window()
 	{
@@ -17,7 +20,7 @@ namespace breakout
 		{
 			return;
 		}
-		window = SDL_CreateWindow("Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
+		window = SDL_CreateWindow("Breakout", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
 		if (window == nullptr)
 		{
 			cerr << "Failed to create window: " << SDL_GetError() << endl;
@@ -48,6 +51,14 @@ namespace breakout
 	{
 		return successfullyCreated;
 	}
+	int Window::GetWidth() const
+	{
+		return width;
+	}
+	int Window::GetHeight() const
+	{
+		return height;
+	}
 	void Window::SetDrawColor(Uint8 red, Uint8 green, Uint8 blue)
 	{
 		SDL_SetRenderDrawColor(renderer, red, green, blue, 255);
@@ -62,7 +73,7 @@ namespace breakout
 	}
 	void Window::RenderObject(GameObject* object)
 	{
-		SDL_RenderCopy(renderer, object->GetTexture(), nullptr, object->GetCoords());
+		SDL_RenderCopy(renderer, object->GetTexture(), nullptr, object->GetRect());
 	}
 	void Window::RenderUpdate()
 	{
