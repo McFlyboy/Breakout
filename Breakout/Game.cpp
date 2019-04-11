@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include "Window.h"
 #include "InputManager.h"
+#include "Time.h"
 #include "GameObject.h"
 #include "Vector2f.h"
 
@@ -14,6 +15,7 @@ namespace breakout
 	private:
 		Window* window = nullptr;
 		InputManager* input = nullptr;
+		Time* time = nullptr;
 		GameObject* square = nullptr;
 
 		bool Start()
@@ -26,6 +28,7 @@ namespace breakout
 			window->SetDrawColor(0, 0, 0);
 			window->Clear();
 			input = InputManager::GetInstance();
+			time = Time::GetInstance();
 			square = new GameObject(Vector2f(), "picture.bmp");
 			if (!square->IsSuccessfullyCreated())
 			{
@@ -33,7 +36,7 @@ namespace breakout
 			}
 			return true;
 		}
-		bool Update()
+		bool Update(float deltaTime)
 		{
 			if (!input->Update() || input->KeyDown(SDL_SCANCODE_ESCAPE))
 			{
@@ -43,7 +46,7 @@ namespace breakout
 			bool right = input->KeyDown(SDL_SCANCODE_RIGHT);
 			bool up = input->KeyDown(SDL_SCANCODE_UP);
 			bool down = input->KeyDown(SDL_SCANCODE_DOWN);
-			if (left)
+			/*if (left)
 			{
 				cout << "Left key pressed" << endl;
 			}
@@ -58,23 +61,24 @@ namespace breakout
 			if (down)
 			{
 				cout << "Down key pressed" << endl;
-			}
+			}*/
 			Vector2f movement;
+			float speed = 0.5f * deltaTime;
 			if (left || input->KeyStillDown(SDL_SCANCODE_LEFT))
 			{
-				movement.x -= 0.1f;
+				movement.x -= speed;
 			}
 			if (left || input->KeyStillDown(SDL_SCANCODE_RIGHT))
 			{
-				movement.x += 0.1f;
+				movement.x += speed;
 			}
 			if (left || input->KeyStillDown(SDL_SCANCODE_UP))
 			{
-				movement.y += 0.1f;
+				movement.y += speed;
 			}
 			if (left || input->KeyStillDown(SDL_SCANCODE_DOWN))
 			{
-				movement.y -= 0.1f;
+				movement.y -= speed;
 			}
 			square->Move(movement);
 			return true;
@@ -95,8 +99,12 @@ namespace breakout
 			bool running = true;
 			while (running)
 			{
-				running = Update();
+				running = Update(time->GetDeltaTime());
 				Render();
+				if (time->UpdateFPS())
+				{
+					cout << "FPS: " << time->GetFPS() << endl;
+				}
 			}
 			return runSuccess;
 		}
@@ -104,6 +112,8 @@ namespace breakout
 		{
 			delete square;
 			square = nullptr;
+			delete time;
+			time = nullptr;
 			delete input;
 			input = nullptr;
 			delete window;

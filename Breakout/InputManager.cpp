@@ -6,6 +6,8 @@ using namespace std;
 
 namespace breakout
 {
+	static InputManager* instance = nullptr;
+
 	const Uint8* keys = nullptr;
 	unique_ptr<Uint8> oldKeys;
 	int keyCount;
@@ -13,8 +15,6 @@ namespace breakout
 	int mouseY;
 	Uint8 buttons;
 	Uint8 oldButtons;
-
-	InputManager* InputManager::instance = nullptr;
 
 	InputManager::InputManager()
 	{

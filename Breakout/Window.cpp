@@ -73,6 +73,7 @@ namespace breakout
 	}
 	void Window::RenderObject(GameObject* object)
 	{
+		object->PrepareRect();
 		SDL_RenderCopy(renderer, object->GetTexture(), nullptr, object->GetRect());
 	}
 	void Window::RenderUpdate()

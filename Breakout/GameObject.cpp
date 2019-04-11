@@ -34,30 +34,25 @@ namespace breakout
 	{
 		return texture != nullptr && rect != nullptr;
 	}
-	Vector2f GameObject::GetPosition() const
+	Vector2f* GameObject::GetPosition() const
 	{
-		return position;
+		return &position;
 	}
 	void GameObject::SetPosition(Vector2f position)
 	{
 		breakout::position = position;
-		rect->x = static_cast<int>(position.x);
-		//Flips y-axis on screen. Origo is in the lower left corner
-		rect->y = Window::GetInstance()->GetHeight() - static_cast<int>(size.y + position.y);
 	}
 	void GameObject::Move(const Vector2f movement)
 	{
 		SetPosition(position + movement);
 	}
-	Vector2f GameObject::GetSize() const
+	Vector2f* GameObject::GetSize() const
 	{
-		return size;
+		return &size;
 	}
 	void GameObject::SetSize(Vector2f size)
 	{
 		breakout::size = size;
-		rect->w = static_cast<int>(size.x);
-		rect->h = static_cast<int>(size.y);
 	}
 	SDL_Texture* GameObject::GetTexture() const
 	{
@@ -66,6 +61,15 @@ namespace breakout
 	const SDL_Rect* GameObject::GetRect() const
 	{
 		return rect;
+	}
+	void GameObject::PrepareRect()
+	{
+		rect->x = static_cast<int>(position.x);
+		//Flips y-axis on screen. Origo is in the lower left corner
+		rect->y = Window::GetInstance()->GetHeight() - static_cast<int>(size.y + position.y);
+
+		rect->w = static_cast<int>(size.x);
+		rect->h = static_cast<int>(size.y);
 	}
 	GameObject::~GameObject()
 	{
