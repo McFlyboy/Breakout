@@ -9,9 +9,9 @@ namespace breakout
 
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
-	bool successfullyCreated = false;
 	const int width = 1280;
 	const int height = 720;
+	const int targetFPS = 120;
 
 	Window::Window()
 	{
@@ -58,6 +58,10 @@ namespace breakout
 	int Window::GetHeight() const
 	{
 		return height;
+	}
+	int Window::GetTargetFPS() const
+	{
+		return targetFPS;
 	}
 	void Window::SetDrawColor(Uint8 red, Uint8 green, Uint8 blue)
 	{

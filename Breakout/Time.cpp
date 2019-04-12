@@ -7,9 +7,11 @@ namespace breakout
 
 	double initTime = 0.0;
 	double previousUpdateTime = 0.0;
-	double previousFPSTime = 0.0;
+	double previousPerSecTime = 0.0;
 	int frames = 0;
+	int updates = 0;
 	int fps = 0;
+	int ups = 0;
 
 	Time::Time()
 	{
@@ -27,10 +29,10 @@ namespace breakout
 	{
 		return static_cast<double>(SDL_GetPerformanceCounter()) * 1000.0 / static_cast<double>(SDL_GetPerformanceFrequency()) - initTime;
 	}
-	float Time::GetDeltaTime()
+	double Time::GetDeltaTime()
 	{
 		double currentUpdateTime = GetTime();
-		float deltaTime = static_cast<float>(currentUpdateTime - previousUpdateTime);
+		double deltaTime = currentUpdateTime - previousUpdateTime;
 		previousUpdateTime = currentUpdateTime;
 		return deltaTime;
 	}
@@ -38,15 +40,28 @@ namespace breakout
 	{
 		return fps;
 	}
-	bool Time::UpdateFPS()
+	int Time::GetUPS() const
+	{
+		return ups;
+	}
+	void Time::AddFrameCount()
 	{
 		frames++;
-		double currentFPSTime = GetTime();
-		if (currentFPSTime - previousFPSTime >= 1000.0)
+	}
+	void Time::AddUpdateCount()
+	{
+		updates++;
+	}
+	bool Time::UpdatePerSecCounters()
+	{
+		double currentPerSecTime = GetTime();
+		if (currentPerSecTime - previousPerSecTime >= 1000.0)
 		{
 			fps = frames;
 			frames = 0;
-			previousFPSTime = currentFPSTime;
+			ups = updates;
+			updates = 0;
+			previousPerSecTime = currentPerSecTime;
 			return true;
 		}
 		return false;

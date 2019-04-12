@@ -3,6 +3,7 @@
 #include "Window.h"
 #include "InputManager.h"
 #include "Time.h"
+#include "Scene.h"
 #include "GameObject.h"
 #include "Vector2f.h"
 
@@ -16,7 +17,7 @@ namespace breakout
 		Window* window = nullptr;
 		InputManager* input = nullptr;
 		Time* time = nullptr;
-		GameObject* square = nullptr;
+		Scene* scene = nullptr;
 
 		bool Start()
 		{
@@ -29,8 +30,9 @@ namespace breakout
 			window->Clear();
 			input = InputManager::GetInstance();
 			time = Time::GetInstance();
-			square = new GameObject(Vector2f(), "picture.bmp");
-			if (!square->IsSuccessfullyCreated())
+			//Gameplay happens in Scene
+			scene = new Scene();
+			if (!scene->IsSuccessfullyCreated())
 			{
 				return false;
 			}
@@ -42,50 +44,12 @@ namespace breakout
 			{
 				return false;
 			}
-			bool left = input->KeyDown(SDL_SCANCODE_LEFT);
-			bool right = input->KeyDown(SDL_SCANCODE_RIGHT);
-			bool up = input->KeyDown(SDL_SCANCODE_UP);
-			bool down = input->KeyDown(SDL_SCANCODE_DOWN);
-			/*if (left)
-			{
-				cout << "Left key pressed" << endl;
-			}
-			if (right)
-			{
-				cout << "Right key pressed" << endl;
-			}
-			if (up)
-			{
-				cout << "Up key pressed" << endl;
-			}
-			if (down)
-			{
-				cout << "Down key pressed" << endl;
-			}*/
-			Vector2f movement;
-			float speed = 0.5f * deltaTime;
-			if (left || input->KeyStillDown(SDL_SCANCODE_LEFT))
-			{
-				movement.x -= speed;
-			}
-			if (left || input->KeyStillDown(SDL_SCANCODE_RIGHT))
-			{
-				movement.x += speed;
-			}
-			if (left || input->KeyStillDown(SDL_SCANCODE_UP))
-			{
-				movement.y += speed;
-			}
-			if (left || input->KeyStillDown(SDL_SCANCODE_DOWN))
-			{
-				movement.y -= speed;
-			}
-			square->Move(movement);
+			scene->Update(deltaTime);
 			return true;
 		}
 		void Render()
 		{
-			window->RenderObject(square);
+			scene->Render();
 			window->RenderUpdate();
 		}
 	public:
@@ -96,22 +60,39 @@ namespace breakout
 			{
 				return runSuccess;
 			}
+			double targetFrameTime = 1000.0 / static_cast<double>(window->GetTargetFPS());
+			double renderTimeRemaining = 0.0;
+			bool renderReady = false;
 			bool running = true;
+			time->GetDeltaTime();
 			while (running)
 			{
-				running = Update(time->GetDeltaTime());
-				Render();
-				if (time->UpdateFPS())
+				double deltaTime = time->GetDeltaTime();
+				running = Update(static_cast<float>(deltaTime));
+				time->AddUpdateCount();
+				if (renderTimeRemaining <= 0.0)
 				{
-					cout << "FPS: " << time->GetFPS() << endl;
+					renderReady = true;
+					renderTimeRemaining += targetFrameTime;
+				}
+				renderTimeRemaining -= deltaTime;
+				if (renderReady)
+				{
+					Render();
+					time->AddFrameCount();
+					renderReady = false;
+				}
+				if (time->UpdatePerSecCounters())
+				{
+					cout << "FPS: " << time->GetFPS() << " - UPS: " << time->GetUPS() << endl;
 				}
 			}
 			return runSuccess;
 		}
 		~Game()
 		{
-			delete square;
-			square = nullptr;
+			delete scene;
+			scene = nullptr;
 			delete time;
 			time = nullptr;
 			delete input;

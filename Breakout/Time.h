@@ -8,9 +8,12 @@ namespace breakout
 		static Time* GetInstance();
 
 		double GetTime() const;
-		float GetDeltaTime();
+		double GetDeltaTime();
 		int GetFPS() const;
-		bool UpdateFPS();
+		int GetUPS() const;
+		void AddFrameCount();
+		void AddUpdateCount();
+		bool UpdatePerSecCounters();
 		~Time();
 	private:
 		Time();
