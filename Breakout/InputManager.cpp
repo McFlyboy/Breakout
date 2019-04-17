@@ -45,6 +45,16 @@ namespace breakout
 	{
 		return oldButtons == SDL_BUTTON(iKeyIndex);
 	}
+	void InputManager::GetMouseDelta(int* deltaX, int* deltaY)
+	{
+		*deltaX = mouseX;
+		//Flips y-axis
+		*deltaY = -mouseY;
+	}
+	bool InputManager::CaptureMouse(bool capture)
+	{
+		return SDL_SetRelativeMouseMode(capture ? SDL_TRUE : SDL_FALSE) == 0;
+	}
 	bool InputManager::Update()
 	{
 		oldButtons = buttons;

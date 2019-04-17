@@ -10,14 +10,14 @@ namespace breakout
 	Window* window = nullptr;
 	InputManager* input = nullptr;
 
-	GameObject* square = nullptr;
+	GameObject* player = nullptr;
 
 	Scene::Scene()
 	{
 		window = Window::GetInstance();
 		input = InputManager::GetInstance();
-		square = new GameObject(Vector2f(), "picture.bmp");
-		if (!square->IsSuccessfullyCreated())
+		player = new GameObject(Vector2f(), "picture.bmp");
+		if (!player->IsSuccessfullyCreated())
 		{
 			return;
 		}
@@ -29,33 +29,17 @@ namespace breakout
 	}
 	void Scene::Update(float deltaTime)
 	{
-		Vector2f movement;
-		float speed = 0.5f * deltaTime;
-		if (input->KeyDown(SDL_SCANCODE_LEFT) || input->KeyStillDown(SDL_SCANCODE_LEFT))
-		{
-			movement.x -= speed;
-		}
-		if (input->KeyDown(SDL_SCANCODE_RIGHT) || input->KeyStillDown(SDL_SCANCODE_RIGHT))
-		{
-			movement.x += speed;
-		}
-		if (input->KeyDown(SDL_SCANCODE_UP) || input->KeyStillDown(SDL_SCANCODE_UP))
-		{
-			movement.y += speed;
-		}
-		if (input->KeyDown(SDL_SCANCODE_DOWN) || input->KeyStillDown(SDL_SCANCODE_DOWN))
-		{
-			movement.y -= speed;
-		}
-		square->Move(movement);
+		int dx, dy;
+		input->GetMouseDelta(&dx, &dy);
+		player->Move(Vector2f(static_cast<float>(dx) * 0.75f, 0.0f));
 	}
 	void Scene::Render()
 	{
-		window->RenderObject(square);
+		window->RenderObject(player);
 	}
 	Scene::~Scene()
 	{
-		delete square;
-		square = nullptr;
+		delete player;
+		player = nullptr;
 	}
 }

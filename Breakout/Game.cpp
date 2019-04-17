@@ -29,6 +29,10 @@ namespace breakout
 			window->SetDrawColor(0, 0, 0);
 			window->Clear();
 			input = InputManager::GetInstance();
+			if (!input->CaptureMouse(true))
+			{
+				cout << "Mouse capture not supported!" << endl << SDL_GetError() << endl;
+			}
 			time = Time::GetInstance();
 			//Gameplay happens in Scene
 			scene = new Scene();

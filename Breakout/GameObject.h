@@ -14,7 +14,7 @@ namespace breakout
 		void SetPosition(Vector2f position);
 		/**
 		*
-		* Convenience function for moving the position statically
+		* Convenience function for moving the position
 		*
 		*/
 		void Move(const Vector2f movement);
