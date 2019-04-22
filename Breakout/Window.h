@@ -1,5 +1,6 @@
 #ifndef WINDOW_H
 #define WINDOW_H
+
 #include <SDL.h>
 #include "GameObject.h"
 
@@ -20,7 +21,15 @@ namespace breakout
 		void RenderUpdate();
 		~Window();
 	private:
+		static Window* instance;
+
 		bool successfullyCreated = false;
+		SDL_Window* window = nullptr;
+		SDL_Renderer* renderer = nullptr;
+		SDL_Rect* rect = nullptr;
+		const int width = 1280;
+		const int height = 720;
+		const int targetFPS = 120;
 
 		Window();
 		bool IsSuccessfullyCreated() const;

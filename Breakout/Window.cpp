@@ -1,17 +1,12 @@
 #include "Window.h"
 #include <iostream>
+#include "Vector2f.h"
 
 using namespace std;
 
 namespace breakout
 {
-	static Window* instance = nullptr;
-
-	SDL_Window* window = nullptr;
-	SDL_Renderer* renderer = nullptr;
-	const int width = 1280;
-	const int height = 720;
-	const int targetFPS = 120;
+	Window* Window::instance = nullptr;
 
 	Window::Window()
 	{
@@ -32,6 +27,7 @@ namespace breakout
 			cerr << "Failed to create renderer: " << SDL_GetError() << endl;
 			return;
 		}
+		rect = new SDL_Rect();
 		successfullyCreated = true;
 	}
 	Window* Window::GetInstance()
@@ -77,8 +73,16 @@ namespace breakout
 	}
 	void Window::RenderObject(GameObject* object)
 	{
-		object->PrepareRect();
-		SDL_RenderCopy(renderer, object->GetTexture(), nullptr, object->GetRect());
+		Vector2f objPos = object->GetPosition();
+		Vector2f objSize = object->GetSize();
+		rect->x = static_cast<int>(objPos.x);
+
+		//Flips y-axis on screen. Origo is in the lower left corner
+		rect->y = height - static_cast<int>(objSize.y + objPos.y);
+
+		rect->w = static_cast<int>(objSize.x);
+		rect->h = static_cast<int>(objSize.y);
+		SDL_RenderCopy(renderer, object->GetTexture(), nullptr, rect);
 	}
 	void Window::RenderUpdate()
 	{
@@ -87,6 +91,8 @@ namespace breakout
 	}
 	Window::~Window()
 	{
+		delete rect;
+		rect = nullptr;
 		if (renderer != nullptr)
 		{
 			SDL_DestroyRenderer(renderer);

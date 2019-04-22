@@ -4,7 +4,6 @@
 #include "InputManager.h"
 #include "Time.h"
 #include "Scene.h"
-#include "GameObject.h"
 #include "Vector2f.h"
 
 using namespace std;

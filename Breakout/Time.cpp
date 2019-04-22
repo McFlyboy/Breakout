@@ -3,15 +3,7 @@
 
 namespace breakout
 {
-	static Time* instance = nullptr;
-
-	double initTime = 0.0;
-	double previousUpdateTime = 0.0;
-	double previousPerSecTime = 0.0;
-	int frames = 0;
-	int updates = 0;
-	int fps = 0;
-	int ups = 0;
+	Time* Time::instance = nullptr;
 
 	Time::Time()
 	{

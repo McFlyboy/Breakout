@@ -50,6 +50,8 @@ namespace breakout
 
 		~InputManager();
 	private:
+		static InputManager* instance;
+
 		InputManager();
 		bool CurrentKeyDown(int iKeyIndex);
 		bool OldKeyDown(int iKeyIndex);

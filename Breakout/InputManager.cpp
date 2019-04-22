@@ -6,7 +6,7 @@ using namespace std;
 
 namespace breakout
 {
-	static InputManager* instance = nullptr;
+	InputManager* InputManager::instance = nullptr;
 
 	const Uint8* keys = nullptr;
 	unique_ptr<Uint8> oldKeys;
@@ -48,6 +48,7 @@ namespace breakout
 	void InputManager::GetMouseDelta(int* deltaX, int* deltaY)
 	{
 		*deltaX = mouseX;
+
 		//Flips y-axis
 		*deltaY = -mouseY;
 	}
