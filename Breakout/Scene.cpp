@@ -8,7 +8,7 @@ namespace breakout
 	{
 		window = Window::GetInstance();
 		input = InputManager::GetInstance();
-		player = new GameObject(Vector2f(), "textures/picture.bmp");
+		player = new GameObject(Vector2f(), "textures/player.bmp");
 		if (!player->IsSuccessfullyCreated())
 		{
 			return;
@@ -19,6 +19,8 @@ namespace breakout
 			return;
 		}
 		successfullyCreated = true;
+		player->SetSize(player->GetSize() * 4.0f);
+		player->SetPosition(Vector2f(static_cast<float>(window->GetWidth() / 2) - player->GetSize().x / 2.0f, 20.0f));
 		board->SetSize(Vector2f(static_cast<float>(window->GetWidth()), static_cast<float>(window->GetHeight())));
 	}
 	bool Scene::IsSuccessfullyCreated() const

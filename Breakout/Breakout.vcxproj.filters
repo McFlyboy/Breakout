@@ -70,7 +70,19 @@
     <Image Include="textures\background.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="textures\picture.bmp">
+    <Image Include="textures\ball.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="textures\block-blue.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="textures\block-magenta.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="textures\block-red.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="textures\player.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

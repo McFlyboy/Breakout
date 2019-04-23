@@ -174,7 +174,11 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\background.bmp" />
-    <Image Include="textures\picture.bmp" />
+    <Image Include="textures\ball.bmp" />
+    <Image Include="textures\block-blue.bmp" />
+    <Image Include="textures\block-magenta.bmp" />
+    <Image Include="textures\block-red.bmp" />
+    <Image Include="textures\player.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
