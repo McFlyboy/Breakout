@@ -7,7 +7,7 @@ namespace breakout
 {
 	namespace AABB
 	{
-		bool IsIntersecting(const GameObject* const obj1, const GameObject* const obj2);
+		bool IsIntersecting(const GameObject& obj1, const GameObject& obj2);
 	};
 }
 #endif

@@ -45,12 +45,12 @@ namespace breakout
 	{
 		return oldButtons == SDL_BUTTON(iKeyIndex);
 	}
-	void InputManager::GetMouseDelta(int* deltaX, int* deltaY)
+	void InputManager::GetMouseDelta(int& deltaX, int& deltaY)
 	{
-		*deltaX = mouseX;
+		deltaX = mouseX;
 
 		//Flips y-axis
-		*deltaY = -mouseY;
+		deltaY = -mouseY;
 	}
 	bool InputManager::CaptureMouse(bool capture)
 	{

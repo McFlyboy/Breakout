@@ -6,7 +6,7 @@ using namespace std;
 
 namespace breakout
 {
-	GameObject::GameObject(Vector2f position, const char* pictureFilename)
+	GameObject::GameObject(const char* pictureFilename, Vector2f position)
 	{
 		this->position = position;
 		SDL_Surface* surface = SDL_LoadBMP(pictureFilename);
@@ -16,8 +16,11 @@ namespace breakout
 			return;
 		}
 		texture = Window::GetInstance()->CreateTextureFromSurface(surface);
-		size.x = static_cast<float>(surface->w);
-		size.y = static_cast<float>(surface->h);
+
+		//Size is multiplied by 4 to scale up and fit the game's pixel-art style
+		size.x = static_cast<float>(surface->w * 4);
+		size.y = static_cast<float>(surface->h * 4);
+
 		SDL_FreeSurface(surface);
 	}
 	bool GameObject::IsSuccessfullyCreated() const

@@ -45,7 +45,7 @@ namespace breakout
 		{
 			return !CurrentMouseDown(iButton) && !OldMouseDown(iButton);
 		}
-		void GetMouseDelta(int* deltaX, int* deltaY);
+		void GetMouseDelta(int& deltaX, int& deltaY);
 		bool CaptureMouse(bool capture);
 
 		~InputManager();

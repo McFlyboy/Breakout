@@ -5,7 +5,7 @@ namespace breakout
 {
 	Vector2f::Vector2f(const float x, const float y) : x(x), y(y) { }
 	Vector2f::Vector2f(const Vector2f& vec) : Vector2f(vec.x, vec.y) { }
-	float Vector2f::getDot(const Vector2f vec) const
+	float Vector2f::getDot(const Vector2f& vec) const
 	{
 		return x * vec.x + y * vec.y;
 	}
@@ -22,17 +22,17 @@ namespace breakout
 			y /= length;
 		}
 	}
-	void Vector2f::operator=(const Vector2f vec)
+	void Vector2f::operator=(const Vector2f& vec)
 	{
 		x = vec.x;
 		y = vec.y;
 	}
-	void Vector2f::operator+=(const Vector2f vec)
+	void Vector2f::operator+=(const Vector2f& vec)
 	{
 		x += vec.x;
 		y += vec.y;
 	}
-	void Vector2f::operator-=(const Vector2f vec)
+	void Vector2f::operator-=(const Vector2f& vec)
 	{
 		x -= vec.x;
 		y -= vec.y;

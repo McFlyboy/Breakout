@@ -4,6 +4,7 @@
 #include "Window.h"
 #include "InputManager.h"
 #include "GameObject.h"
+#include "Ball.h"
 
 namespace breakout
 {
@@ -18,6 +19,7 @@ namespace breakout
 	private:
 		bool successfullyCreated = false;
 		GameObject* player = nullptr;
+		Ball* ball = nullptr;
 		GameObject* board = nullptr;
 
 		//These are deleted in Game class

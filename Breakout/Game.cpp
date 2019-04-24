@@ -4,7 +4,6 @@
 #include "InputManager.h"
 #include "Time.h"
 #include "Scene.h"
-#include "Vector2f.h"
 
 using namespace std;
 
@@ -33,8 +32,10 @@ namespace breakout
 				cout << "Mouse capture not supported!" << endl << SDL_GetError() << endl;
 			}
 			time = Time::GetInstance();
+
 			//Gameplay happens in Scene
 			scene = new Scene();
+
 			if (!scene->IsSuccessfullyCreated())
 			{
 				return false;

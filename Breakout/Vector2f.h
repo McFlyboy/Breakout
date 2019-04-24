@@ -10,12 +10,12 @@ namespace breakout
 		float x, y;
 		Vector2f(const float x = 0.0f, const float y = 0.0f);
 		Vector2f(const Vector2f& vec);
-		float getDot(const Vector2f vec) const;
+		float getDot(const Vector2f& vec) const;
 		float getLength() const;
 		void normalize();
-		void operator=(const Vector2f vec);
-		void operator+=(const Vector2f vec);
-		void operator-=(const Vector2f vec);
+		void operator=(const Vector2f& vec);
+		void operator+=(const Vector2f& vec);
+		void operator-=(const Vector2f& vec);
 		void operator*=(const float scalar);
 		Vector2f getNormalized() const;
 		Vector2f operator+(const Vector2f& vec) const;

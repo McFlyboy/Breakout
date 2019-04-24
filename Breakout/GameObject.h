@@ -9,7 +9,7 @@ namespace breakout
 	class GameObject
 	{
 	public:
-		GameObject(Vector2f position, const char* pictureFilename);
+		GameObject(const char* pictureFilename, Vector2f position = Vector2f());
 		bool IsSuccessfullyCreated() const;
 		Vector2f GetPosition() const;
 		void SetPosition(Vector2f position);
@@ -24,7 +24,7 @@ namespace breakout
 		Vector2f GetSize() const;
 		void SetSize(Vector2f size);
 		SDL_Texture* GetTexture() const;
-		~GameObject();
+		virtual ~GameObject();
 	private:
 		Vector2f position;
 		Vector2f size;

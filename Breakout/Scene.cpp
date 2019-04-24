@@ -8,20 +8,26 @@ namespace breakout
 	{
 		window = Window::GetInstance();
 		input = InputManager::GetInstance();
-		player = new GameObject(Vector2f(), "textures/player.bmp");
+		player = new GameObject("textures/player.bmp");
 		if (!player->IsSuccessfullyCreated())
 		{
 			return;
 		}
-		board = new GameObject(Vector2f(), "textures/background.bmp");
+		ball = new Ball("textures/ball.bmp");
+		if (!ball->IsSuccessfullyCreated())
+		{
+			return;
+		}
+
+		//background.bmp's resolution should always be 1/4 of the window's size
+		board = new GameObject("textures/background.bmp");
+
 		if (!board->IsSuccessfullyCreated())
 		{
 			return;
 		}
 		successfullyCreated = true;
-		player->SetSize(player->GetSize() * 4.0f);
-		player->SetPosition(Vector2f(static_cast<float>(window->GetWidth() / 2) - player->GetSize().x / 2.0f, 20.0f));
-		board->SetSize(Vector2f(static_cast<float>(window->GetWidth()), static_cast<float>(window->GetHeight())));
+		player->SetPosition(Vector2f((board->GetSize().x - player->GetSize().x) / 2.0f, 20.0f));
 	}
 	bool Scene::IsSuccessfullyCreated() const
 	{
@@ -30,7 +36,7 @@ namespace breakout
 	void Scene::Update(float deltaTime)
 	{
 		int dx, dy;
-		input->GetMouseDelta(&dx, &dy);
+		input->GetMouseDelta(dx, dy);
 		player->Move(Vector2f(static_cast<float>(dx) * 0.75f, 0.0f));
 		Vector2f playerPos = player->GetPosition();
 		if (playerPos.x < 0.0f)
@@ -42,16 +48,20 @@ namespace breakout
 			playerPos.x = board->GetSize().x - player->GetSize().x;
 		}
 		player->SetPosition(playerPos);
+		ball->UpdateMovement(deltaTime);
 	}
 	void Scene::Render()
 	{
 		window->RenderObject(board);
 		window->RenderObject(player);
+		window->RenderObject(ball);
 	}
 	Scene::~Scene()
 	{
 		delete player;
 		player = nullptr;
+		delete ball;
+		ball = nullptr;
 		delete board;
 		board = nullptr;
 	}
