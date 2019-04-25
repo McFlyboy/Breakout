@@ -28,6 +28,7 @@ namespace breakout
 		}
 		successfullyCreated = true;
 		player->SetPosition(Vector2f((board->GetSize().x - player->GetSize().x) / 2.0f, 20.0f));
+		ball->SetPosition(Vector2f(400.0f, 400.0f));
 	}
 	bool Scene::IsSuccessfullyCreated() const
 	{
@@ -37,7 +38,7 @@ namespace breakout
 	{
 		int dx, dy;
 		input->GetMouseDelta(dx, dy);
-		player->Move(Vector2f(static_cast<float>(dx) * 0.75f, 0.0f));
+		player->Move(Vector2f(static_cast<float>(dx) * 0.75f));
 		Vector2f playerPos = player->GetPosition();
 		if (playerPos.x < 0.0f)
 		{
@@ -48,7 +49,23 @@ namespace breakout
 			playerPos.x = board->GetSize().x - player->GetSize().x;
 		}
 		player->SetPosition(playerPos);
-		ball->UpdateMovement(deltaTime);
+		if (AABB::WillIntersect(ball, player, deltaTime))
+		{
+			if (AABB::WillXIntersect(ball, player, deltaTime))
+			{
+				ball->FlipXVelocity();
+			}
+			ball->UpdateXMovement(deltaTime);
+			if (AABB::WillYIntersect(ball, player, deltaTime))
+			{
+				ball->FlipYVelocity();
+			}
+			ball->UpdateYMovement(deltaTime);
+		}
+		else
+		{
+			ball->UpdateMovement(deltaTime);
+		}
 	}
 	void Scene::Render()
 	{
