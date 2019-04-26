@@ -32,10 +32,7 @@ namespace breakout
 	}
 	void Ball::ResetVelocity()
 	{
-		velocity = Vector2f(1.0f, 1.0f) * 0.02f;
+		velocity = Vector2f(1.0f, 1.0f) * 0.5f;
 	}
-	Ball::~Ball()
-	{
-		
-	}
+	Ball::~Ball() { }
 }

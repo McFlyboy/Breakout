@@ -48,13 +48,15 @@ namespace breakout
 			{
 				return false;
 			}
-			scene->Update(deltaTime);
-			return true;
+			bool keepRunning = scene->Update(deltaTime);
+			time->AddUpdateCount();
+			return keepRunning;
 		}
 		void Render()
 		{
 			scene->Render();
 			window->RenderUpdate();
+			time->AddFrameCount();
 		}
 	public:
 		bool Run()
@@ -64,16 +66,16 @@ namespace breakout
 			{
 				return runSuccess;
 			}
-			double targetFrameTime = 1000.0 / static_cast<double>(window->GetTargetFPS());
+			double targetFrameTime = 1000.0 / static_cast<double>(window->GetMonitorRefreshRate());
 			double renderTimeRemaining = 0.0;
 			bool renderReady = false;
 			bool running = true;
+			cout << "Game started!\n--WELCOME TO BREAKOUT--\n" << endl;
 			time->GetDeltaTime();
 			while (running)
 			{
 				double deltaTime = time->GetDeltaTime();
 				running = Update(static_cast<float>(deltaTime));
-				time->AddUpdateCount();
 				if (renderTimeRemaining <= 0.0)
 				{
 					renderReady = true;
@@ -83,7 +85,6 @@ namespace breakout
 				if (renderReady)
 				{
 					Render();
-					time->AddFrameCount();
 					renderReady = false;
 				}
 				if (time->UpdatePerSecCounters())
@@ -91,6 +92,7 @@ namespace breakout
 					cout << "FPS: " << time->GetFPS() << " - UPS: " << time->GetUPS() << endl;
 				}
 			}
+			cout << "\n--GAME OVER--\nThanks for playing!" << endl;
 			return runSuccess;
 		}
 		~Game()

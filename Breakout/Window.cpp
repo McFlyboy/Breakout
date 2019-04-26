@@ -55,9 +55,15 @@ namespace breakout
 	{
 		return height;
 	}
-	int Window::GetTargetFPS() const
+	int Window::GetMonitorRefreshRate() const
 	{
-		return targetFPS;
+		SDL_DisplayMode displayMode;
+		if (SDL_GetDesktopDisplayMode(0, &displayMode) != 0)
+		{
+			cout << "Could not find the refresh rate for the monitor. Using 60Hz as default." << endl;
+			return 60;
+		}
+		return displayMode.refresh_rate;
 	}
 	void Window::SetDrawColor(Uint8 red, Uint8 green, Uint8 blue)
 	{

@@ -13,7 +13,7 @@ namespace breakout
 
 		int GetWidth() const;
 		int GetHeight() const;
-		int GetTargetFPS() const;
+		int GetMonitorRefreshRate() const;
 		void SetDrawColor(Uint8 red, Uint8 green, Uint8 blue);
 		void Clear();
 		SDL_Texture* CreateTextureFromSurface(SDL_Surface* surface);
@@ -29,7 +29,6 @@ namespace breakout
 		SDL_Rect* rect = nullptr;
 		const int width = 1280;
 		const int height = 720;
-		const int targetFPS = 120;
 
 		Window();
 		bool IsSuccessfullyCreated() const;

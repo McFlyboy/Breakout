@@ -13,18 +13,23 @@ namespace breakout
 	public:
 		Scene();
 		bool IsSuccessfullyCreated() const;
-		void Update(float deltaTime);
+		bool Update(float deltaTime);
 		void Render();
 		~Scene();
 	private:
 		bool successfullyCreated = false;
 		GameObject* player = nullptr;
 		Ball* ball = nullptr;
+		GameObject** blocks = nullptr;
+		int blockCount = 24;
+		int blocksAlive = blockCount;
 		GameObject* board = nullptr;
 
 		//These are deleted in Game class
 		Window* window = nullptr;
 		InputManager* input = nullptr;
+
+		bool handleBallToObjectCollision(Ball* ball, GameObject* obj, float deltaTime);
 	};
 }
 #endif
