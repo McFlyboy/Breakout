@@ -169,7 +169,6 @@
     <ClInclude Include="Ball.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InputManager.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="Vector2f.h" />
